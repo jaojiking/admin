@@ -34,6 +34,10 @@
             padding: 20px 0;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             flex-shrink: 0;
+            /* 데스크톱 환경에서만 스크롤 가능하도록 높이 설정 */
+            position: relative; 
+            display: flex; /* 내부 요소 배치를 위해 추가 */
+            flex-direction: column; /* 내부 요소 세로 배치 */
         }
         .sidebar-header {
             text-align: center;
@@ -48,6 +52,9 @@
         }
         .sidebar-header span {
             color: #3498db;
+        }
+        .sidebar-menu {
+            flex-grow: 1; /* 메뉴가 남은 공간을 차지하도록 설정 */
         }
         .sidebar-menu a {
             display: flex;
@@ -72,11 +79,12 @@
         
         /* 로그아웃 버튼 */
         .sidebar-footer {
-            position: absolute;
-            bottom: 20px;
-            width: 250px;
-            padding: 0 20px;
+            /* 모바일 대응을 위해 position: absolute 제거 및 일반 흐름에 배치 */
+            padding: 20px;
             box-sizing: border-box;
+            border-top: 1px solid #34495e;
+            margin-top: auto; /* 메뉴와 푸터 사이에 공간을 두기 위해 */
+            width: 100%;
         }
         .logout-btn {
             width: 100%;
@@ -312,6 +320,7 @@
         }
         .search-field {
             flex: 1;
+            min-width: 100px; /* 모바일에서 찌그러지지 않도록 최소 너비 설정 */
         }
         .search-field label {
             display: block;
@@ -336,6 +345,7 @@
             cursor: pointer;
             font-weight: 700;
             transition: background-color 0.2s;
+            white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
         }
         .search-btn:hover {
             background-color: #2980b9;
@@ -465,17 +475,20 @@
             .sidebar {
                 width: 100%;
                 height: auto;
-                padding: 10px 0;
+                padding: 0; /* 내부 패딩은 메뉴에서 처리 */
+                position: static; /* 모바일에서 고정 해제 */
             }
             .sidebar-header {
                 display: none; /* 모바일에서 헤더 숨김 */
             }
             .sidebar-menu {
                 display: flex;
-                overflow-x: auto;
+                overflow-x: auto; /* 메뉴 가로 스크롤 가능 */
                 white-space: nowrap;
+                flex-grow: 0; /* 스크롤바가 생기도록 설정 */
             }
             .sidebar-menu a {
+                flex-shrink: 0; /* 항목이 찌그러지지 않도록 방지 */
                 border-left: none;
                 border-bottom: 5px solid transparent;
                 padding: 10px 15px;
@@ -491,17 +504,29 @@
             .card-grid {
                 grid-template-columns: 1fr;
             }
+            
+            /* 모바일에서 사이드바 푸터 (로그아웃 버튼) 스타일 조정 */
             .sidebar-footer {
                 position: static;
                 width: 100%;
                 padding: 10px 15px;
+                border-top: none; /* 구분선 제거 */
+                margin-top: 0;
             }
+            
+            /* 모바일에서 검색 바 세로 배열 */
             .search-bar {
                 flex-direction: column;
                 align-items: stretch;
             }
+            .search-field {
+                flex: none; /* 유연성 제거 */
+                width: 100%; /* 전체 너비 차지 */
+                min-width: unset;
+            }
             .search-btn {
                 width: 100%;
+                margin-top: 10px; /* 필드와 버튼 사이 간격 */
             }
         }
     </style>
